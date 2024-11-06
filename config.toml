@@ -1,0 +1,9 @@
+[youtube]
+    key = "dhkp-6f63-jfjh-vvdp-bfx0"
+    service = "YouTube-RTMPS"
+    server = "rtmp://a.rtmp.youtube.com/live2"
+
+[twitch]
+    key = "YOUR_TWITCH_STREAM_KEY"
+    service = "Twitch"
+    server = "Auto"
