@@ -31,6 +31,27 @@ class MainWindow(QMainWindow):
             }
         """
 
+        self.textbox_style = """
+        QLineEdit {
+            background-color: #1C2833;
+            color: white;
+            border: 1px solid #5D6D7E;
+            padding: 5px;
+        }
+        QLineEdit:focus {
+            background-color: #273746;
+        }
+        QTextEdit {
+            background-color: #1C2833;
+            color: white;
+            border: 1px solid #5D6D7E;
+            padding: 5px;
+        }
+        QTextEdit:focus {
+            background-color: #273746;
+        }
+"""
+
 
         # Stylesheet for ComboBoxes
         self.combo_box_style = """
@@ -53,6 +74,7 @@ class MainWindow(QMainWindow):
         # Textbox for YouTube Link
         self.youtube_link = QLineEdit(self)
         self.youtube_link.setGeometry(150, 60, 400, 30)  # x, y, width, height
+        self.youtube_link.setStyleSheet("color: white; font-size: 16pt;")  # Setting text color to white and font size to 16pt
 
         # Label for Date ComboBox
         date_label = QLabel("Select Date:", self)
@@ -169,6 +191,12 @@ class MainWindow(QMainWindow):
         self.Duraion.setValidator(QIntValidator())
 
 
+
+        self.youtube_link.setStyleSheet(self.textbox_style)
+        self.Duraion.setStyleSheet(self.textbox_style)
+        self.delete_index_input.setStyleSheet(self.textbox_style)
+        self.schedule_info.setStyleSheet(self.textbox_style)
+
     def start(self):
         if (self.scheduled_items or self.StreamStarted==True):
             print("Start button clicked")
@@ -190,7 +218,7 @@ class MainWindow(QMainWindow):
             } """ )
                 self.start_button.setText("Stop")
                 # Add functionality to start scheduling here
-                self.Schedular.start_schedule()                                                                                  
+                self.Schedular.start_schedule()
             else:
                 self.start_button.setStyleSheet(self.button_style)  # Setting text color to white and font size to 16pt
                 # Add functionality to stop scheduling here
@@ -207,10 +235,10 @@ class MainWindow(QMainWindow):
             ampm = self.ampm_combo.currentText()
             platform = self.platform_combo.currentText()
             duration=self.Duraion.text()
-            ### add it to the array becausae its displays on gui 
+            ### add it to the array becausae its displays on gui
             self.addToTheTextEdit(youtube_link,date,month,hour,minutes,ampm,platform,duration)
 
-            ### add the task to the backend                                                         
+            ### add the task to the backend
             self.DataBase.add_task(month=month,day=date,hour=hour,minute=minutes,am_pm=ampm,platform=platform,url=youtube_link,duration=duration)
             ### this will be added to the schdulaed tasks                                           TODO
             self.Schedular.add_task(month=month,day=date,hour=hour,minute=minutes,am_pm=ampm,platform=platform,url=youtube_link,indexinGUI=len(self.scheduled_items),duration=duration)
@@ -239,7 +267,7 @@ class MainWindow(QMainWindow):
                 tasks=self.DataBase.get_all_tasks()
                 task=tasks[index-1]
                 self.Schedular.delete_task(task[1],task[2],task[3],task[4],task[5],int(task[8]))
-                ### delete the task from the backend                                                
+                ### delete the task from the backend
                 self.DataBase.delete_task(index)
             else:
                 print("Index out of range")
