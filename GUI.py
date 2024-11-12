@@ -125,8 +125,8 @@ class MainWindow(QMainWindow):
         # Platform ComboBox
         self.platform_combo = QComboBox(self)
         self.platform_combo.setGeometry(270, 200, 160, 30)  # x, y, width, height
-        self.platform_combo.addItem("YouTube")
-        self.platform_combo.addItem("Twitch")
+        self.platform_combo.addItem("Flussonic")
+        # self.platform_combo.addItem("Twitch")
         self.platform_combo.setStyleSheet(self.combo_box_style)
         #Queue TextEdit
         self.setWindowTitle("OBS Stream Schedule")

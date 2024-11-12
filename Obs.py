@@ -3,7 +3,7 @@ import time
 import toml
 
 class Obs:
-    def __init__(self, host='localhost', port=4455, password=''):
+    def __init__(self, host='localhost', port=4444, password='password'):
         self.host = host
         self.port = port
         self.password = password
@@ -12,7 +12,7 @@ class Obs:
         self.config = toml.load("./config.toml")
 
     def connect(self):
-        self.client = obs.ReqClient(host=self.host, port=self.port, password=self.password)
+        self.client = obs.ReqClient(host=self.host, port=self.port, password=self.password,timeout=2)
         print("Connected to OBS WebSocket server.")
 
     def disconnect(self):
@@ -36,24 +36,24 @@ class Obs:
 
     def set_streaming_service(self, platform):
         try:
-            if platform.lower() == "youtube":
+            if platform.lower() == "flussonic":
                 settings = {
                     "type": "rtmp_common",
                     "settings": {
-                        "service": self.config['youtube']['service'],
-                        "server": self.config['youtube']['server'],
-                        "key": self.config['youtube']['key']
+                        "service": self.config['flussonic']['service'],
+                        "server": self.config['flussonic']['server'],
+                        "key": self.config['flussonic']['key']
                     }
                 }
-            elif platform.lower() == "twitch":
-                settings = {
-                    "type": "rtmp_common",
-                    "settings": {
-                        "service": self.config['twitch']['service'],
-                        "server": self.config['twitch']['server'],
-                        "key": self.config['twitch']['key']
-                    }
-                }
+            # elif platform.lower() == "twitch":
+            #     settings = {
+            #         "type": "rtmp_common",
+            #         "settings": {
+            #             "service": self.config['twitch']['service'],
+            #             "server": self.config['twitch']['server'],
+            #             "key": self.config['twitch']['key']
+            #         }
+            #     }
             else:
                 raise ValueError("Unsupported platform")
 
